@@ -202,8 +202,54 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let result = '';
+  for (let i = 0; i < height; i += 1) {
+    for (let j = 0; j < width; j += 1) {
+      switch (i) {
+        case 0:
+          switch (j) {
+            case 0:
+              result += '┌';
+              break;
+            case (width - 1):
+              result += '┐\n';
+              break;
+            default:
+              result += '─';
+              break;
+          }
+          break;
+        case (height - 1):
+          switch (j) {
+            case 0:
+              result += '└';
+              break;
+            case (width - 1):
+              result += '┘\n';
+              break;
+            default:
+              result += '─';
+              break;
+          }
+          break;
+        default:
+          switch (j) {
+            case 0:
+              result += '│';
+              break;
+            case (width - 1):
+              result += '│\n';
+              break;
+            default:
+              result += ' ';
+              break;
+          }
+          break;
+      }
+    }
+  }
+  return result;
 }
 
 
@@ -223,8 +269,18 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const originLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const resultLetters = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  let result = '';
+  for (let i = 0; i < str.length; i += 1) {
+    if (originLetters.indexOf(str.charAt(i)) !== -1) {
+      result += resultLetters.charAt(originLetters.indexOf(str.charAt(i)));
+    } else {
+      result += str.charAt(i);
+    }
+  }
+  return result;
 }
 
 /**
@@ -240,8 +296,11 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  if (typeof value === 'string' || value instanceof String) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -269,8 +328,17 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const cardsArr = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
+  for (let i = 0; i < cardsArr.length; i += 1) {
+    if (cardsArr[i] === value) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 
