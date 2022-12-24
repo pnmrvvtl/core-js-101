@@ -97,10 +97,7 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a, b, c) {
-  if ((a + b <= c) || (a + c <= b) || (b + c <= a)) {
-    return false;
-  }
-  return true;
+  return !((a + b <= c) || (a + c <= b) || (b + c <= a));
 }
 
 
@@ -214,8 +211,8 @@ function findFirstSingleChar(str) {
  *
  * @param {number} a
  * @param {number} b
- * @param {bool} isStartIncluded
- * @param {bool} isEndIncluded
+ * @param {boolean} isStartIncluded
+ * @param {boolean} isEndIncluded
  * @return {string}
  *
  * @example
@@ -264,8 +261,8 @@ function reverseString(str) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return Number(String(num).split('').reverse().join(''));
 }
 
 
@@ -275,7 +272,7 @@ function reverseInteger(/* num */) {
  *
  * See algorithm here : https://en.wikipedia.org/wiki/Luhn_algorithm
  *
- * @param {number} cnn
+ * @param {number} ccn
  * @return {boolean}
  *
  * @example:
@@ -289,8 +286,30 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const ccnArr = String(ccn).split('');
+  let start = ccnArr.length % 2 ? 1 : 0;
+  const payload = [];
+  for (let i = 0; i < ccnArr.length; i += 1) {
+    const currentDigit = Number(ccnArr[i]);
+    if (i === start) {
+      if (currentDigit * 2 > 9) {
+        payload.push(
+          Math.trunc((currentDigit * 2) / 10) + ((currentDigit * 2) % 10),
+        );
+        start += 2;
+      } else {
+        payload.push(2 * currentDigit);
+        start += 2;
+      }
+    } else {
+      payload.push(currentDigit);
+    }
+  }
+  const sum = payload.reduce(
+    (previousValue, currentValue) => previousValue + currentValue, 0,
+  );
+  return !(sum % 10);
 }
 
 /**
@@ -298,7 +317,7 @@ function isCreditCardNumber(/* ccn */) {
  *   step1 : find sum of all digits
  *   step2 : if sum > 9 then goto step1 otherwise return the sum
  *
- * @param {number} n
+ * @param {number} num
  * @return {number}
  *
  * @example:
@@ -307,8 +326,15 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  let number = num;
+  while (number > 9) {
+    number = number
+      .toString()
+      .split('')
+      .reduce((previousValue, currentValue) => Number(previousValue) + Number(currentValue), 0);
+  }
+  return number;
 }
 
 
@@ -333,8 +359,38 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const bracketsStack = [];
+  for (let i = 0; i < str.length; i += 1) {
+    switch (str[i]) {
+      case ')':
+        if (bracketsStack.pop() !== '(') {
+          return false;
+        }
+        break;
+      case ']':
+        if (bracketsStack.pop() !== '[') {
+          return false;
+        }
+        break;
+      case '>':
+        if (bracketsStack.pop() !== '<') {
+          return false;
+        }
+        break;
+      case '}':
+        if (bracketsStack.pop() !== '{') {
+          return false;
+        }
+        break;
+      default:
+        bracketsStack.push(str[i]);
+    }
+  }
+  if (bracketsStack.length === 0) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -358,8 +414,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -376,6 +432,17 @@ function toNaryString(/* num, n */) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(/* pathes */) {
+  /*
+  const pathsStrings = pathes.map((el) => el.split('/'));
+  let result = '';
+  let min = Math.min(...pathsStrings.map((el) => el.length));
+  for (let i = 0; i < min; i += 1 ) {
+    for (let j = 0; j < min; j += 1) {
+
+    }
+  }
+  return result;
+   */
   throw new Error('Not implemented');
 }
 
