@@ -176,7 +176,7 @@ function partialUsingArguments(/* fn, ...args1 */) {
  */
 function getIdGeneratorFunction(startFrom) {
   let cachedValue = startFrom;
-  return function () {
+  return () => {
     cachedValue += 1;
     return cachedValue - 1;
   };
