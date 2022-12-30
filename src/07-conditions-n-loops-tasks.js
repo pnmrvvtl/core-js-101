@@ -432,17 +432,6 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(/* pathes */) {
-  /*
-  const pathsStrings = pathes.map((el) => el.split('/'));
-  let result = '';
-  let min = Math.min(...pathsStrings.map((el) => el.length));
-  for (let i = 0; i < min; i += 1 ) {
-    for (let j = 0; j < min; j += 1) {
-
-    }
-  }
-  return result;
-   */
   throw new Error('Not implemented');
 }
 
@@ -465,8 +454,19 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    result.push([]);
+    for (let k = 0; k < m2[0].length; k += 1) {
+      let temp = 0;
+      for (let j = 0; j < m1[0].length; j += 1) {
+        temp += (m1[i][j] * m2[j][k]);
+      }
+      result[i].push(temp);
+    }
+  }
+  return result;
 }
 
 
