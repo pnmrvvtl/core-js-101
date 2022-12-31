@@ -387,10 +387,7 @@ function isBracketsBalanced(str) {
         bracketsStack.push(str[i]);
     }
   }
-  if (bracketsStack.length === 0) {
-    return true;
-  }
-  return false;
+  return bracketsStack.length === 0;
 }
 
 
@@ -422,7 +419,7 @@ function toNaryString(num, n) {
 /**
  * Returns the common directory path for specified array of full filenames.
  *
- * @param {array} pathes
+ * @param {array} paths
  * @return {string}
  *
  * @example:
@@ -431,11 +428,21 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(paths) {
+  let result = '';
+  const pathsArr = paths.map((el) => el.split('/'));
+  const minLen = Math.min(...pathsArr.map((el) => el.length));
+  for (let i = 0; i < minLen; i += 1) {
+    const part = pathsArr[0][i];
+    for (let j = 1; j < pathsArr.length; j += 1) {
+      if (!(pathsArr[j][i] === part)) {
+        return result;
+      }
+    }
+    result += part === '' ? '/' : `${part}/`;
+  }
+  return result;
 }
-
-
 /**
  * Returns the product of two specified matrixes.
  * See details: https://en.wikipedia.org/wiki/Matrix_multiplication
@@ -478,7 +485,7 @@ function getMatrixProduct(m1, m2) {
  * Function should return who is winner in the current position according to the game rules.
  * The result can be: 'X','0',undefined
  *
- * @param {array} position
+ * @param {array} p
  * @return {string}
  *
  * @example
@@ -500,15 +507,34 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
-  // let result = undefined;
-  // for (let i = 0; i < position.length; i += 1) {
-  //   for (let j = 0; j < position.length; j += 1) {
-  //
-  //   }
-  // }
-  // return result;
+function evaluateTicTacToePosition(p) {
+  if ((p[0][0] === '0' && (p[0][1] === '0' && p[0][2] === '0'))
+    || (p[0][0] === '0' && (p[1][1] === '0' && p[2][2] === '0'))
+    || (p[0][0] === '0' && (p[1][0] === '0' && p[2][0] === '0'))
+    || (p[0][0] === '0' && (p[0][1] === '0' && p[0][2] === '0'))
+    || (p[1][0] === '0' && (p[1][1] === '0' && p[1][2] === '0'))
+    || (p[2][0] === '0' && (p[2][1] === '0' && p[2][2] === '0'))
+    || (p[2][0] === '0' && (p[1][1] === '0' && p[0][2] === '0'))
+    || (p[0][0] === '0' && (p[1][0] === '0' && p[2][0] === '0'))
+    || (p[0][1] === '0' && (p[1][1] === '0' && p[2][1] === '0'))
+    || (p[0][2] === '0' && (p[1][2] === '0' && p[2][2] === '0'))
+  ) {
+    return '0';
+  }
+  if ((p[0][0] === 'X' && (p[0][1] === 'X' && p[0][2] === 'X'))
+    || (p[0][0] === 'X' && (p[1][1] === 'X' && p[2][2] === 'X'))
+    || (p[0][0] === 'X' && (p[1][0] === 'X' && p[2][0] === 'X'))
+    || (p[0][0] === 'X' && (p[0][1] === 'X' && p[0][2] === 'X'))
+    || (p[1][0] === 'X' && (p[1][1] === 'X' && p[1][2] === 'X'))
+    || (p[2][0] === 'X' && (p[2][1] === 'X' && p[2][2] === 'X'))
+    || (p[2][0] === 'X' && (p[1][1] === 'X' && p[0][2] === 'X'))
+    || (p[0][0] === 'X' && (p[1][0] === 'X' && p[2][0] === 'X'))
+    || (p[0][1] === 'X' && (p[1][1] === 'X' && p[2][1] === 'X'))
+    || (p[0][2] === 'X' && (p[1][2] === 'X' && p[2][2] === 'X'))
+  ) {
+    return 'X';
+  }
+  return undefined;
 }
 
 
